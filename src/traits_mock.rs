@@ -1,4 +1,4 @@
-use crate::{generator::{Generator, YieldPoint}, something::{Event, UserResponse}};
+use crate::{generator::{Generator, YieldPoint}, Event, UserResponse};
 
 
 pub type GeneratorLocal<'a> = Generator<'a, Event,UserResponse,Result<u32,Error>>;

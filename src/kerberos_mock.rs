@@ -1,4 +1,4 @@
-use crate::{traits_mock::{MockSSPi, YieldPointLocal, GeneratorLocal, Error}, generator::Generator, something::{Event, UserResponse}};
+use crate::{traits_mock::{YieldPointLocal, MockSSPi, Error, GeneratorLocal}, generator::Generator, Event, UserResponse};
 
 
 pub struct MockKerberos {
@@ -26,11 +26,12 @@ impl MockKerberos {
     async fn do_the_thing(&self)->Result<u32,Error>{
         let res = self.yield_point.suspend(Event::HttpRequest { url: self.url.clone() }).await;
         match res {
-            UserResponse::Payload(payload) => {
-                Err(Error)
-            },
             UserResponse::SomeValue(v) => {
-                Ok(v)
+                if v > 100 {
+                    return Err(Error);
+                }else {
+                    return Ok(v);
+                }
             },
         }
     }
